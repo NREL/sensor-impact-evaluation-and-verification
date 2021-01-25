@@ -1,7 +1,11 @@
 # sensor_impact_FDD
-This is an NREL public repository used for sensor impact evaluation and verification project funded by DOE. Specifically, the function of repository can evaluate the sensor impact, including sensor accuracy and sensor selection, on fault detection and diagnostics (FDD) performance.  
+This is an NREL public repository used for sensor impact evaluation and verification project funded by DOE. Specifically, the function of repository can evaluate the sensor impact, including sensor accuracy and sensor selection, on fault detection and diagnostics (FDD) performance.
 
-This project is a work-in-progress.
+The run of the modules in this repo relies on the fault building simulation data that calibrated on Oak Ridge National Laboratory's Flexible Research Platform. Check the Data section for download information.
+
+This project is a work-in-progress and is temporarily in a personal repository, which in the future will be moved to https://github.com/NREL/sensor_impact_FDD after the account is set up by NREL's Information Technology Support team.
+
+Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 18, 2021
 
 ## Installation
 Download and install the latest version of [Conda](https://docs.conda.io/en/latest/) (version 4.4 or above)
@@ -30,16 +34,16 @@ Downloading data is mandatory to use the classes in the repo,
 The data can be downloaded [here](https://docs.conda.io/en/latest/). Please contact Liang.Zhang@nrel.gov if there is any download issues.
 
 ## Modules
-This repo contains three classes that realize three modules used for sensor impact evaluation in FDD
+The base.py and SIE.py provide modules to realize sensor impact evaluations. This repo contains three sub-classes that realize three modules used for sensor impact evaluation in FDD.
 
 ### Module 1: Sensor Accuracy Impact on FDD Performance
-Class Name: sensor_accuracy_impact_FDD or SAIF
+Sub-Class Name: sensor_accuracy_impact_FDD or SAIF
 
 ### Module 2: Sensor Selection and Impact on FDD Performance
-Class Name: sensor_selection_impact_FDD or SSIF
+Sub-Class Name: sensor_selection_impact_FDD or SSIF
 
 ### Module 3: Sensor Accuracy Impact on Sensor Selection and FDD Performance
-Class Name: sensor_accuracy_impact_sensor_selection or SAISS
+Sub-Class Name: sensor_accuracy_impact_sensor_selection or SAISS
 
 ## Machine Learning Algorithms
 ### Linear Models
