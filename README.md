@@ -3,7 +3,7 @@ This is an NREL public repository used for sensor impact evaluation and verifica
 
 The run of the modules in this repo relies on the fault building simulation data that calibrated on Oak Ridge National Laboratory's Flexible Research Platform. Check the Data section for download information.
 
-This project is a work-in-progress and is temporarily in a personal repository, which in the future will be moved to https://github.com/NREL/sensor_impact_FDD after the account is set up by NREL's Information Technology Support team.
+This project is a work-in-progress.
 
 Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 18, 2021
 
