@@ -35,10 +35,15 @@ The data can be downloaded [here](https://docs.conda.io/en/latest/). Please cont
 
 ## Work in Progress
 TODO: find a better structure to select ML algorithm
+  
 TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis
+  
 TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module
+  
 TODO: improve the computation efficiency of all three modules
+  
 TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py
+  
 TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection
 
   
