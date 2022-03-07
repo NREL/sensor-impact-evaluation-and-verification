@@ -16,6 +16,8 @@ Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 
   
 ~~TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection, 3/4/2022~~
 
+TODO: use fault prevalence probability to calculate STMC ranges 
+
 ## Improvement and Test in Progress
 Test: Missing data, NAN, wrong data type, super large data in the simulation file
 
