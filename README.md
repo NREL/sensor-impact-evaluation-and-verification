@@ -61,16 +61,16 @@ Downloading data is mandatory to use the classes in the repo,
 The data can be downloaded [here](https://docs.conda.io/en/latest/). Please contact Liang.Zhang@nrel.gov if there is any download issues.
 
 ## Modules
-The base.py and SIE.py provide modules to realize sensor impact evaluations. This repo contains three sub-classes that realize three modules used for sensor impact evaluation in FDD.
+The base.py and sensor_impact_FDD.py provide modules to realize sensor impact evaluations. This repo contains three sub-classes that realize three modules used for sensor impact evaluation in FDD.
 
-### Module 1: Sensor Accuracy Impact on FDD Performance
-Sub-Class Name: sensor_accuracy_impact_FDD or SAIF
+### Module 1: Sensor Selection Analysis
+Sub-Class Name: sensor_selection_analysis
 
-### Module 2: Sensor Selection and Impact on FDD Performance
-Sub-Class Name: sensor_selection_impact_FDD or SSIF
+### Module 2: Sensor Inaccuracy Analysis
+Sub-Class Name: sensor_inaccuracy_analysis
 
-### Module 3: Sensor Accuracy Impact on Sensor Selection and FDD Performance
-Sub-Class Name: sensor_accuracy_impact_sensor_selection or SAISS
+### Module 3: Sensor Cost Analysis
+Sub-Class Name: sensor_cost_analysis
 
 ## Machine Learning Algorithms
 ### Linear Models
