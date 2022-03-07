@@ -21,7 +21,7 @@ Test: Missing data, NAN, wrong data type, super large data in the simulation fil
 
 Solution: add data cleaning function to remove sensor with wrong data type and remove data with bad quality
 
-Test: Monte Carlo Simulation is set too large
+Test: Monte Carlo Simulation number of runs is set too large
 
 Solution: add a function to estimate the calculation time and raise a warning
 
