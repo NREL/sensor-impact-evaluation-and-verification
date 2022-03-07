@@ -1,4 +1,4 @@
-# Python Library: Sensor Impact FDD (SIF)
+# Python Package: Sensor Impact FDD (SIF)
 This is an NREL public repository used for sensor impact evaluation and verification project funded by DOE. Specifically, the function of repository can evaluate the sensor impact, including sensor inaccuracy, sensor selection, and sensor cost analysis on fault detection and diagnostics (FDD) performance.
 
 Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 18, 2021
