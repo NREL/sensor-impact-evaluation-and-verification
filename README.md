@@ -1,27 +1,31 @@
-# Sensor Impact FDD (SIF)
+# Python Package: Sensor Impact FDD (SIF)
 This is an NREL public repository used for sensor impact evaluation and verification project funded by DOE. Specifically, the function of repository can evaluate the sensor impact, including sensor inaccuracy, sensor selection, and sensor cost analysis on fault detection and diagnostics (FDD) performance.
 
 Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 18, 2021
 
 ## Work in Progress
-TODO: find a better structure to select ML algorithm
+~~TODO: find a better structure to select ML algorithm, 2/22/2022~~
   
-TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis
+~~TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis, 2/22/2022~~
   
-TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module
+~~TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module, 2/25/2022~~
   
-TODO: improve the computation efficiency of all three modules
+~~TODO: improve the computation efficiency of all three modules, 2/30/2022~~
   
-TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py
+~~TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py, 2/30/2022~~
   
-TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection
+~~TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection, 3/4/2022~~
+
+TODO: use fault prevalence probability to calculate STMC ranges 
+
+TODO: Write documentation for preparing simulation data in the "User Defined Analysis" mode
 
 ## Improvement and Test in Progress
 Test: Missing data, NAN, wrong data type, super large data in the simulation file
 
 Solution: add data cleaning function to remove sensor with wrong data type and remove data with bad quality
 
-Test: Monte Carlo Simulation is set too large
+Test: Monte Carlo Simulation number of runs is set too large
 
 Solution: add a function to estimate the calculation time and raise a warning
 
