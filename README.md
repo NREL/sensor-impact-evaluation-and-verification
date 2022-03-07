@@ -18,6 +18,8 @@ Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 
 
 TODO: use fault prevalence probability to calculate STMC ranges 
 
+TODO: Write documentation for preparing simulation data in the "User Defined Analysis" mode
+
 ## Improvement and Test in Progress
 Test: Missing data, NAN, wrong data type, super large data in the simulation file
 
