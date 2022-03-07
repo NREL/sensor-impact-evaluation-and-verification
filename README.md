@@ -7,6 +7,19 @@ This project is a work-in-progress.
 
 Authors: Liang Zhang, Matt Leach, National Renewable Energy Laboratory, January 18, 2021
 
+## Work in Progress
+TODO: find a better structure to select ML algorithm
+  
+TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis
+  
+TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module
+  
+TODO: improve the computation efficiency of all three modules
+  
+TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py
+  
+TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection
+
 ## Installation
 Download and install the latest version of [Conda](https://docs.conda.io/en/latest/) (version 4.4 or above)
 Create a new conda environment:
@@ -33,20 +46,6 @@ Downloading data is mandatory to use the classes in the repo,
 
 The data can be downloaded [here](https://docs.conda.io/en/latest/). Please contact Liang.Zhang@nrel.gov if there is any download issues.
 
-## Work in Progress
-TODO: find a better structure to select ML algorithm
-  
-TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis
-  
-TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module
-  
-TODO: improve the computation efficiency of all three modules
-  
-TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py
-  
-TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection
-
-  
 ## Modules
 The base.py and SIE.py provide modules to realize sensor impact evaluations. This repo contains three sub-classes that realize three modules used for sensor impact evaluation in FDD.
 
