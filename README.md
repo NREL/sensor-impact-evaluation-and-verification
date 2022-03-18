@@ -76,6 +76,51 @@ Sub-Class Name: sensor_inaccuracy_analysis
 ### Module 3: Sensor Cost Analysis
 Sub-Class Name: sensor_cost_analysis
 
+## Use Cases
+import senosr_impact_FDD as SIF
+import base_functions as bf
+import os
+
+Create an object to define the general analysis configurations. In the example, the technical route is "general guidance", which indicates that the analysis is based on providing general guidance and analysis instead of analyzing specific building. In this mode, the users do not need to prepare data for the analysis for themselves.
+  
+example_object = SIF.SensorImpactFDD(technical_route='general_guidance',
+                                     building_type_or_name='small_commercial_building',
+                                     ml_algorithm='random_forest',
+                                     weather='TN_Knoxville',
+                                     root_path=os.getcwd())
+ 
+After creating the object, three kinds of anaylsis can be done based on the object. The first analysis is sensor selection analysis which can be used to identify important sensors for FDD purpose. There are two major modes in this anaylsis (1) important sensor by fault type, which ranks sensors by each fault, (2) important sensors for all fault types.
+  
+example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'sum', 'std', 'skew', 'kurt'], '4h'],
+                                         feature_selection_config=[['filter', 'pearson', 0.5], ['wrapper', 'forward'],
+                                                                   ['embedded', False]],
+                                         by_fault_type=False,
+                                         top_n_features=3,
+                                         rerun=False)
+
+The example result is shown as follows:
+
+
+The second analysis is sensor inaccruacy impact on sensor selection and FDD performance. The key input to this module is sensor fault probability table to define the probability of sensor with faults.
+
+example_object.sensor_inaccuracy_analysis(sensor_fault_probability_table=bf.Base.sensor_fault_probability_table,
+                                          by_fault_type=False,
+                                          top_n_features=20,
+                                          Monte_Carlo_runs=1000,
+                                          rerun=False)
+  
+The example result is shown as follows:
+  
+The third analysis is sensor cost analysis. The key inputs to be defined in this module is baseline sensor set, candidate sensor set, and analysis mode which defines whether sensors are evaluate one by one or group by group.
+
+example_object.sensor_cost_analysis(analysis_mode='group',
+                                    baseline_sensor_set=bf.Base.baseline_sensor_set,
+                                    candidate_sensor_set=bf.Base.candidate_sensor_set,
+                                    rerun=True)
+
+The example result is shown as follows:  
+  
+  
 ## Machine Learning Algorithms
 ### Linear Models
 [Classifier using Ridge regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifier.html#sklearn.linear_model.RidgeClassifier)
