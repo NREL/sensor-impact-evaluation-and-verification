@@ -84,7 +84,7 @@ After creating the object, three kinds of anaylsis can be done based on the obje
 
 The example result is shown as follows:
 
-![Module 1 Results Example](src="https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_1_results_example.png" width="200" height="200")
+![Module 1 Results Example](https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_1_results_example.png)
 
 The second analysis is sensor inaccruacy impact on sensor selection and FDD performance. The key input to this module is sensor fault probability table to define the probability of sensor with faults.
 
