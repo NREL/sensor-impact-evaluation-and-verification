@@ -1,27 +1,208 @@
 import pandas as pd
 
 class Base:
-    ctrl_datadir_dict = {
-        "default_control": f"data/default_control/TN_Knoxville"
-    }
 
+    # This version only support "small_commercial_buildling"
     guidance_bldg_dict = {
-        'small_commercial_building': 'data/XX/XX'
+        'small_commercial_building': None
     }
 
+    # This version only support random forest and xgboost
     algorithm_dict = {
-        'random_forest': 'XXX',
-        'SVM': "XXX"
+        'random_forest': None,
+        'xgboost': None
     }
-
-    baseline_sensor_set = ['sensor_1', 'sensor_2','sensor_3','sensor_4','sensor_5']
-
-    candidate_sensor_set = ['sensor_6', 'sensor_7', 'sensor_8', 'sensor_9', 'sensor_10']
 
     sensor_fault_probability_table = 'data/metadata/sensor_fault_probability_table.csv'
 
-    fault_prevalence_dict = {
+    sensor_category_dict = {
+                'cooling_electricity [W]': 'electiricty_meter',
+                'electricity_facility [W]': 'electiricty_meter',
+                'whole_building_facility_total_hvac_electric_demand_power [W]': 'electiricty_meter',
+                'rooftop_supply_fan_fan_electric_energy [W]': 'electiricty_meter',
+                'fans_electricity [W]': 'electiricty_meter',
+                'gas_facility [W]': 'gas_meter',
+                'rooftop_heatingcoil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_102_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_103_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_104_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_105_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_106_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_202_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_203_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_204_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_205_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'room_206_reheat_coil_heating_coil_heating_energy [W]': 'energy_meter',
+                'heating_electricity [W]': 'electiricty_meter',
+                'heating_gas [W]': 'gas_meter',
+                'interiorequipment_electricity [W]': 'electiricty_meter',
+                'interiorlights_electricity [W]': 'electiricty_meter',
+                'environment_site_diffuse_solar_radiation_rate_per_area [W/m2]': 'weather_meter',
+                'environment_site_direct_solar_radiation_rate_per_area [W/m2]': 'weather_meter',
+                'environment_site_outdoor_air_barometric_pressure [Pa]': 'weather_meter',
+                'environment_site_outdoor_air_drybulb_temperature [C]': 'weather_meter',
+                'environment_site_outdoor_air_relative_humidity [%]': 'weather_meter',
+                'environment_site_outdoor_air_wetbulb_temperature [C]': 'weather_meter',
+                'environment_site_rain_status []': 'weather_meter',
+                'model_outdoor_air_node_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_1_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_10_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_11_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_12_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_13_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_14_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_15_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_16_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_17_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_18_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_19_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_2_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_20_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_21_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_22_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_23_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_24_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_25_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_26_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_27_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_28_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_3_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_4_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_6_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_7_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_8_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'node_9_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'rooftop_cooling_coil_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'rooftop_heating_coil_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'rooftop_mixed_air_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'rooftop_supply_fan_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_102_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_102_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_103_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_103_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_104_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_104_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_105_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_105_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_106_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_106_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_202_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_202_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_203_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_203_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_204_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_204_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_205_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_205_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_206_supply_inlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'room_206_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{0628a441-dd58-4747-b49f-b343da599f6d}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{37d30d88-4e83-4f6c-98c7-a29c55ba3e84}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{38113ce7-41ec-4cfc-9439-9e0eb1e4167e}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{3a71b498-dd57-4750-ab29-7013d94b7420}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{466be93f-f26d-4e42-ab5f-0c90ed714020}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{6ec5fd0e-2850-4c87-bc5f-bc1e2d2e5109}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{76064095-69fd-4710-a706-3caca6b1930a}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{8411efaa-a23b-4a5a-be30-f1fa819dbe95}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{9129fe30-5384-4db8-8e33-0bb342dd4a49}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{ced936e0-0614-4c8a-a4d6-aa0b5c362790}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{d5737138-bc5b-4212-acf2-fd3235458210}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                '{d9fe34a3-6952-4cd4-96fc-8fec69429e39}_system_node_current_density_volume_flow_rate [m3/s]': 'system_node_flow_rate',
+                'model_outdoor_air_node_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_1_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_10_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_11_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_12_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_13_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_14_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_15_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_16_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_17_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_18_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_19_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_2_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_20_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_21_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_22_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_23_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_24_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_25_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_26_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_27_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_28_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_3_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_4_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_6_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_7_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_8_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'node_9_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'rooftop_cooling_coil_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'rooftop_heating_coil_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'rooftop_mixed_air_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'rooftop_supply_fan_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_102_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_102_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_103_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_103_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_104_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_104_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_105_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_105_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_106_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_106_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_202_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_202_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_203_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_203_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_204_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_204_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_205_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_205_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_206_supply_inlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                'room_206_vav_reheat_damper_outlet_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{0628a441-dd58-4747-b49f-b343da599f6d}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{37d30d88-4e83-4f6c-98c7-a29c55ba3e84}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{38113ce7-41ec-4cfc-9439-9e0eb1e4167e}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{3a71b498-dd57-4750-ab29-7013d94b7420}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{466be93f-f26d-4e42-ab5f-0c90ed714020}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{6ec5fd0e-2850-4c87-bc5f-bc1e2d2e5109}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{76064095-69fd-4710-a706-3caca6b1930a}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{8411efaa-a23b-4a5a-be30-f1fa819dbe95}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{9129fe30-5384-4db8-8e33-0bb342dd4a49}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{ced936e0-0614-4c8a-a4d6-aa0b5c362790}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{d5737138-bc5b-4212-acf2-fd3235458210}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '{d9fe34a3-6952-4cd4-96fc-8fec69429e39}_system_node_temperature [C]': 'system_node_temperature_sensor',
+                '1f_plenum_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                '2f_plenum_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_101_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_102_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_103_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_104_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_105_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_106_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_201_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_202_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_203_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_204_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_205_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                'room_206_zone_air_relative_humidity [%]': 'room_humidity_sensor',
+                '1f_plenum_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                '2f_plenum_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_101_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_102_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_103_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_104_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_105_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_106_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_201_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_202_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_203_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_204_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_205_zone_mean_air_temperature [C]': 'room_temperature_sensor',
+                'room_206_zone_mean_air_temperature [C]': 'room_temperature_sensor'
+            }
 
+    fault_prevalence_dict = {
         'air_handling_unit_fan_motor_degradation': sum([0.16, 0.35])/len([0.16, 0.35]),
         'baseline': 0.05, #default
         'biased_economizer_sensor_mixed_t': sum([0.27, 0.19, 0.11])/len([0.27, 0.19, 0.11]),
@@ -48,21 +229,3 @@ class Base:
         'return_air_duct_leakages': sum([0.38, 0.65, 0.42, 0.39, 0.44])/len([0.38, 0.65, 0.42, 0.39, 0.44]),
         'supply_air_duct_leakages': sum([0.38, 0.65, 0.42, 0.39, 0.44])/len([0.38, 0.65, 0.42, 0.39, 0.44]),
         'thermostat_bias': sum([0.27, 0.19, 0.11])/len([0.27, 0.19, 0.11])}
-
-    results = pd.read_csv(f'C:/Users/leonz/jupyter_notebook/sensor_impact_FDD_framework/data/default_control'
-                          f'/TN_Knoxville/summary_results_algorithm_Knoxville_TN_AMY.csv')
-
-    temp_df = results.groupby(['fault_type']).mean()[['unmet_hours_during_occupied_cooling',
-                                                      'unmet_hours_during_occupied_heating']]
-
-    temp_df['unmet_hours_during_occupied_cooling_diff'] = temp_df['unmet_hours_during_occupied_cooling'] - 393.5
-    temp_df['unmet_hours_during_occupied_heating_diff'] = temp_df['unmet_hours_during_occupied_heating'] - 443.5
-
-    temp_df['unmet_hours_during_occupied_cooling_and_heating_diff'] = temp_df[
-                                                                          'unmet_hours_during_occupied_cooling_diff'] \
-                                                                      + temp_df[
-                                                                          'unmet_hours_during_occupied_heating_diff']
-
-    temp_df = temp_df['unmet_hours_during_occupied_cooling_and_heating_diff']
-
-    thermal_discomfort_dict = temp_df.to_dict()

@@ -1,3 +1,6 @@
+# TODO: check all TODO
+# TODO: all function description
+
 import pandas as pd
 import numpy as np
 import os
@@ -9,8 +12,8 @@ from sklearn.ensemble import RandomForestClassifier
 import base_functions
 
 class SensorImpactFDD:
-    def __init__(self, technical_route = 'general_guidance', building_type_or_name = 'small_commercial_building',
-                 ml_algorithm = 'random_forest', weather = 'TN_Knoxville', root_path = os.getcwd()):
+    def __init__(self, technical_route='general_guidance', building_type_or_name='small_commercial_building',
+                 ml_algorithm='random_forest', weather='TN_Knoxville', root_path=os.getcwd()):
         """
 
         :param technical_route: choose from 'general_guidance' and 'user_defined_analysis'.
@@ -47,9 +50,6 @@ class SensorImpactFDD:
         self.weather = weather
 
         self.root_path = root_path
-
-        # TODO: in this version we don't consider control algorithm a variable in the analysis
-        # self.ctrl_algorithm = ctrl_algorithm
 
     def create_folder_structure(self):
         print('Creating folder structure...')
@@ -93,23 +93,478 @@ class SensorImpactFDD:
 
         else:
             print(f'Files detected in the simulation data folder {self.simulation_data_dir}')
-            # TODO: here we should plugin a simulation data quality detection module
             pass
-
-    #def sensor_config(self):
-    #    this
 
     def sensor_selection_analysis(self, feature_extraction_config, feature_selection_config, by_fault_type,
                                   top_n_features, rerun=False):
         print('-----Sensor Selection Analysis-----')
-        print('Results detected.')
-        pass
+
+        simulation_metadata_name = 'summary_results_algorithm_Knoxville_TN_AMY.csv'
+
+        sensor_selection_analysis_result_folder_dir = os.path.join(self.root_path,
+                                                              f'analysis_results/{self.technical_route}/{self.building_type_or_name}/{self.weather}/'
+                                                              f'sensor_selection_analysis/')
+
+        if (rerun==False) and os.path.isfile((f'{sensor_selection_analysis_result_folder_dir}/important_sensor_by_fault_type.csv')):
+            print('Results detected.')
+
+        # Prepare input output data
+        meta_data = pd.read_csv(f'{self.simulation_data_dir}/{simulation_metadata_name}')
+        baseline_file_id = meta_data.loc[meta_data.fault_type == 'baseline'].id.iloc[0]
+        baseline_data = pd.read_csv(f'{self.simulation_data_dir}/{baseline_file_id}_sensors.csv')
+        baseline_data = baseline_data.groupby(baseline_data.index // 4).mean().iloc[:, 0:-8]
+        baseline_data['label'] = 'baseline'
+
+        simulation_file_list = meta_data.loc[meta_data.fault_type != 'baseline'].id.tolist()
+
+        fault_inputs_output = pd.DataFrame([])
+        for simulation_id, i in zip(simulation_file_list, range(len(simulation_file_list))):
+            #         print(f'    Processing: {i+1}/{len(simulation_file_list)}')
+            temp_raw_FDD_data = pd.read_csv(f'data/default_control/TN_Knoxville/{simulation_id}_sensors.csv')
+            temp_raw_FDD_data = temp_raw_FDD_data.groupby(temp_raw_FDD_data.index // (4)).mean().iloc[:, 0:-8]
+            temp_raw_FDD_data['label'] = meta_data.loc[meta_data.id == simulation_id].fault_type.values[0]
+            fault_inputs_output = pd.concat([fault_inputs_output, temp_raw_FDD_data], axis=0)
+
+        # re-balancing training data
+        weight_of_baseline_data = 10
+        faulty_and_unfaulty_inputs_output = pd.concat(
+            [fault_inputs_output, pd.concat([baseline_data] * weight_of_baseline_data)],
+            axis=0).reset_index(drop=True)
+
+        # Run modeling and feature importance
+        if by_fault_type == False:
+            inputs = faulty_and_unfaulty_inputs_output.iloc[:, 0:-1]
+            output = faulty_and_unfaulty_inputs_output['label']
+            # model with defined sensors
+            cv = KFold(n_splits=4, shuffle=True, random_state=42)
+            for train_index, test_index in cv.split(inputs):
+                break
+
+            X_train, X_test = inputs.iloc[train_index].reset_index(drop=True), inputs.iloc[test_index].reset_index(
+                drop=True)
+            y_train, y_test = output.iloc[train_index].reset_index(drop=True), output.iloc[test_index].reset_index(
+                drop=True)
+
+            model_with_baseline_sensors = RandomForestClassifier(n_estimators=25, random_state=42)
+            #     model_with_baseline_sensors = GradientBoostingClassifier(n_estimators = 20, random_state=42)
+
+            model_with_baseline_sensors.fit(X_train, y_train)
+
+            feature_importance_temp = pd.DataFrame([])
+            feature_importance_temp.loc[:, 'sensor_name'] = inputs.columns
+            feature_importance_temp.loc[:, 'importance'] = model_with_baseline_sensors.feature_importances_
+            important_features = feature_importance_temp.sort_values(
+                by=['importance'], ascending=False).sensor_name.tolist()
+
+            important_features = important_features[0:top_n_features]
+
+            important_features = pd.DataFrame(important_features, columns=['sensor_name'])
+
+            important_features.to_csv(f'{sensor_selection_analysis_result_folder_dir}/important_sensor_all_faults.csv')
+
+        elif by_fault_type == True:
+
+            fault_type_list = meta_data.loc[meta_data.fault_type != 'baseline'].fault_type.unique().tolist()
+            feature_importance_summary_list = pd.DataFrame([])
+
+            for fault_type in fault_type_list:
+
+                faulty_and_unfaulty_inputs_output = faulty_and_unfaulty_inputs_output.loc[
+                    faulty_and_unfaulty_inputs_output.label.isin(['baseline', fault_type])]
+
+                inputs = faulty_and_unfaulty_inputs_output.iloc[:, 0:-1]
+                output = faulty_and_unfaulty_inputs_output['label']
+                # model with defined sensors
+                cv = KFold(n_splits=4, shuffle=True, random_state=42)
+                for train_index, test_index in cv.split(inputs):
+                    break
+
+                X_train, X_test = inputs.iloc[train_index].reset_index(drop=True), inputs.iloc[test_index].reset_index(
+                    drop=True)
+                y_train, y_test = output.iloc[train_index].reset_index(drop=True), output.iloc[test_index].reset_index(
+                    drop=True)
+
+                model_with_baseline_sensors = RandomForestClassifier(n_estimators=25, random_state=42)
+                #     model_with_baseline_sensors = GradientBoostingClassifier(n_estimators = 20, random_state=42)
+
+                model_with_baseline_sensors.fit(X_train, y_train)
+
+                feature_importance_temp = pd.DataFrame([])
+                feature_importance_temp.loc[:, 'sensor_name'] = inputs.columns
+                feature_importance_temp.loc[:, 'importance'] = model_with_baseline_sensors.feature_importances_
+                important_features = feature_importance_temp.sort_values(
+                    by=['importance'], ascending=False).sensor_name.tolist()
+
+                important_features = important_features[0:top_n_features]
+                feature_importance_summary_list[fault_type] = important_features
+
+            feature_importance_summary_list.to_csv(f'{sensor_selection_analysis_result_folder_dir}/important_sensor_by_fault_type.csv')
+
+        else:
+            raise Exception(f"The value for 'by_fault_type' should be either True or False")
+
+        # Save results
+
 
     def sensor_inaccuracy_analysis(self, sensor_fault_probability_table, by_fault_type, top_n_features,
                                    Monte_Carlo_runs, rerun=False):
         print('-----Sensor Inaccuracy Analysis-----')
-        print('Results detected.')
-        pass
+        if False: #TODO: detect whether results exist
+            print('Results detected.')
+
+        import pandas as pd
+        import numpy as np
+        from sklearn.model_selection import KFold
+        from sklearn.ensemble import RandomForestClassifier
+        from sklearn.metrics import zero_one_loss
+        import random
+        import pickle
+        import os
+        import dask
+        from dask import compute
+        import dask.bag as db
+        from sklearn.metrics import accuracy_score
+        import matplotlib.pyplot as plt
+        from collections import Counter
+        from random import randrange
+        from sklearn.ensemble import GradientBoostingClassifier
+
+        self.sensor_inaccuracy_analysis_result_folder_dir = os.path.join(self.root_path,
+                                                              f'analysis_results/{self.technical_route}/{self.building_type_or_name}/{self.weather}/'
+                                                              f'sensor_inaccuracy_analysis/')
+
+        considered_sensors_in_journal_paper = [
+            'cooling_electricity [W]',
+            'electricity_facility [W]',
+            'whole_building_facility_total_hvac_electric_demand_power [W]',
+            'rooftop_supply_fan_fan_electric_energy [W]',
+            'fans_electricity [W]',
+            'gas_facility [W]',
+            'rooftop_heatingcoil_heating_coil_heating_energy [W]',
+            'heating_electricity [W]',
+            'heating_gas [W]',
+            'interiorequipment_electricity [W]',
+            'interiorlights_electricity [W]',
+            'environment_site_diffuse_solar_radiation_rate_per_area [W/m2]',  #: 'weather_meter',
+            'environment_site_direct_solar_radiation_rate_per_area [W/m2]',  #:'weather_meter',
+            'environment_site_outdoor_air_barometric_pressure [Pa]',  #:'weather_meter',
+            'environment_site_outdoor_air_drybulb_temperature [C]',  #:'weather_meter',
+            'environment_site_outdoor_air_relative_humidity [%]',  #:'weather_meter',
+            'environment_site_outdoor_air_wetbulb_temperature [C]',  #:'weather_meter',
+            'environment_site_rain_status []',  #:'weather_meter',
+            'rooftop_cooling_coil_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'rooftop_heating_coil_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'rooftop_mixed_air_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'rooftop_supply_fan_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_102_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_102_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_103_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_103_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_104_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_104_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_105_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_105_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_106_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_106_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_202_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_202_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_203_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_203_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_204_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_204_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_205_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_205_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_206_supply_inlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            'room_206_vav_reheat_damper_outlet_system_node_temperature [C]',  #:'system_node_temperature_sensor',
+            '1f_plenum_zone_air_relative_humidity [%]',  #: 'room_humidity_sensor',
+            '2f_plenum_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_101_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_102_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_103_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_104_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_105_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_106_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_201_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_202_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_203_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_204_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_205_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            'room_206_zone_air_relative_humidity [%]',  #:'room_humidity_sensor',
+            '1f_plenum_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            '2f_plenum_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_101_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_102_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_103_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_104_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_105_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_106_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_201_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_202_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_203_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_204_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_205_zone_mean_air_temperature [C]',  #:'room_temperature_sensor',
+            'room_206_zone_mean_air_temperature [C]',  #:'room_temperature_sensor'
+        ]
+
+        def adding_inaccuracy_to_raw_data(FDD_data_df, sensor_type_fault_probability=0.33,
+                                          failure_bias_drift_precision_conditional_probability=[0.25, 0.25, 0.25,
+                                                                                                0.25]):
+
+            raw_FDD_data = FDD_data_df[considered_sensors_in_journal_paper].copy()
+
+            sensor_category_dict = base_functions.Base.sensor_category_dict
+
+            sensor_type_fault_probability_table = {
+                'electiricty_meter': sensor_type_fault_probability,
+                'system_node_temperature_sensor': sensor_type_fault_probability,
+                'room_temperature_sensor': sensor_type_fault_probability,
+                'energy_meter': sensor_type_fault_probability,
+                'weather_meter': sensor_type_fault_probability,
+                'room_humidity_sensor': sensor_type_fault_probability,
+                'system_node_flow_rate': sensor_type_fault_probability,
+                'gas_meter': sensor_type_fault_probability
+            }
+
+            failure_bias_drift_precision_conditional_probability_table = {
+                'electiricty_meter': failure_bias_drift_precision_conditional_probability,
+                'system_node_temperature_sensor': failure_bias_drift_precision_conditional_probability,
+                'room_temperature_sensor': failure_bias_drift_precision_conditional_probability,
+                'energy_meter': failure_bias_drift_precision_conditional_probability,
+                'weather_meter': failure_bias_drift_precision_conditional_probability,
+                'room_humidity_sensor': failure_bias_drift_precision_conditional_probability,
+                'system_node_flow_rate': failure_bias_drift_precision_conditional_probability,
+                'gas_meter': failure_bias_drift_precision_conditional_probability
+            }
+
+            all_sensor_list = pd.DataFrame([])
+            all_sensor_list['sensors'] = sensor_category_dict.keys()
+            all_sensor_list['sensor_type'] = all_sensor_list['sensors'].map(sensor_category_dict)
+            all_sensor_list['probability'] = all_sensor_list['sensor_type'].map(sensor_type_fault_probability_table)
+
+            probability_results = []
+            for x in all_sensor_list.probability:
+                a_list = [0, 1]
+                distribution = [1 - x, x]
+                random_number = random.choices(a_list, distribution)[0]
+                probability_results.append(random_number)
+
+            all_sensor_list['probability_results'] = probability_results
+
+            all_sensor_list['conditional_probability'] = all_sensor_list['sensor_type'].map(
+                failure_bias_drift_precision_conditional_probability_table)
+
+            probability_results = []
+            for x in all_sensor_list.conditional_probability:
+                a_list = ['failure', 'bias', 'drift', 'precision']
+                distribution = x
+                random_number = random.choices(a_list, distribution)[0]
+                probability_results.append(random_number)
+
+            all_sensor_list['conditional_probability_results'] = probability_results
+
+            for x in considered_sensors_in_journal_paper:
+                temp = all_sensor_list.loc[all_sensor_list.sensors == x]
+                if temp.probability_results.values[0] == 1:
+                    if temp.conditional_probability_results.values[0] == 'bias':
+                        raw_FDD_data.loc[:, x] = raw_FDD_data.loc[:, x] + raw_FDD_data.loc[:, x].mean() * 0.05
+                    elif temp.conditional_probability_results.values[0] == 'drift':
+                        raw_FDD_data.loc[:, x] = raw_FDD_data.loc[:, x] + np.linspace(0, raw_FDD_data.loc[:,
+                                                                                         x].mean() * 0.1,
+                                                                                      num=len(raw_FDD_data.loc[:, x]))
+                    elif temp.conditional_probability_results.values[0] == 'precision':
+                        # random_list = [random.uniform(- example_data.loc[:,x].mean() * 0.05, example_data.loc[:,x].mean() * 0.05) for j in range(len(example_data))]
+                        random_list = np.random.normal(0, 0.05, len(raw_FDD_data)) * raw_FDD_data.loc[:, x].mean()
+                        raw_FDD_data.loc[:, x] = raw_FDD_data.loc[:, x] + random_list
+                    else:
+                        raw_FDD_data.loc[:, x] = raw_FDD_data.loc[:, x].mean()
+                    # print(f'Processed:{x}, {temp.conditional_probability_results.values[0]}')
+
+            return raw_FDD_data
+
+        def save_inaccuracy_injected_data(weather, j):
+            if not os.path.exists(f'data/data_temp/data_inaccuracy_injected_{j}/{weather}/{weather}/'):
+                os.makedirs(f'data/data_temp/data_inaccuracy_injected_{j}/{weather}/{weather}/')
+            print(f'Generating the {j}th inaccuracy injected data')
+            prefixed = [filename for filename in os.listdir(self.simulation_data_dir) if 'sensors' in filename]
+            for file_name, i in zip(prefixed, range(len(prefixed))):
+                print(f'    Processing: {i + 1}/{len(prefixed)}')
+                temp_raw_FDD_data = pd.read_csv(f'{self.simulation_data_dir}/{file_name}')
+                temp_raw_FDD_data = temp_raw_FDD_data.groupby(temp_raw_FDD_data.index // (4)).mean()
+
+                temp_raw_FDD_data = temp_raw_FDD_data[considered_sensors_in_journal_paper]
+                if j != 0:
+                    inaccuracy_injected_FDD_data = adding_inaccuracy_to_raw_data(temp_raw_FDD_data)
+                else:
+                    inaccuracy_injected_FDD_data = adding_inaccuracy_to_raw_data(temp_raw_FDD_data,
+                                                                                 sensor_type_fault_probability=0)
+
+                inaccuracy_injected_FDD_data.to_csv(f'data/data_temp/data_inaccuracy_injected_{j}/{weather}/{weather}'
+                                                    f'/{file_name}',
+                                                    index=None)
+
+        # generate fault injected data
+        # for weather in ['AK_Fairbanks', 'FL_Miami', 'KY_Louisville', 'MN_Duluth', 'SAU_Riyadh', 'TN_Knoxville', 'VA_Richmond']:
+
+        if rerun == True:
+            for weather in ['TN_Knoxville']:
+                results = []
+                for x in range(11):
+                    y = dask.delayed(save_inaccuracy_injected_data)(weather, x)
+                    results.append(y)
+
+                results = dask.compute(*results)
+        elif rerun == False:
+            print(' Injected data already generated')
+        else:
+            raise Exception(f"rerun should be either True or False")
+
+        selected_fault_types = ['air_handling_unit_fan_motor_degradation',
+                                'biased_economizer_sensor_mixed_t',
+                                'duct_fouling',
+                                'economizer_opening_stuck',
+                                'hvac_setback_error_delayed_onset',
+                                'hvac_setback_error_no_overnight_setback',
+                                'hvac_setback_error_early_termination',
+                                'improper_time_delay_setting_in_occupancy_sensors',
+                                'lighting_setback_error_delayed_onset',
+                                'lighting_setback_error_no_overnight_setback',
+                                'lighting_setback_error_early_termination',
+                                'return_air_duct_leakages',
+                                'supply_air_duct_leakages',
+                                'thermostat_bias',
+                                'baseline'
+                                ]
+
+        def calculate_error_and_features(inputs, output):
+            cv = KFold(n_splits=4, shuffle=True, random_state=42)
+            results = []
+            important_features = []
+            # i = 0
+
+            for train_index, test_index in cv.split(inputs):
+                X_train, X_test = inputs.iloc[train_index].copy(), inputs.iloc[test_index].copy()
+                y_train, y_test = output.iloc[train_index].copy(), output.iloc[test_index].copy()
+                # Fit the model on training data
+                regr = RandomForestClassifier(n_estimators=20, random_state=42)
+                #         regr = GradientBoostingClassifier(random_state = 42, n_estimators = 20)
+                regr.fit(X_train, y_train)
+                #     # save model
+                #     filename = f'model/saved_model_{i}_{weather}.sav'
+                #     pickle.dump(regr, open(filename, 'wb'))
+                #     i += 1
+                # feature importance
+                feature_importance_temp = pd.DataFrame([])
+                feature_importance_temp.loc[:, 'sensor_name'] = inputs.columns
+                feature_importance_temp.loc[:, 'importance'] = regr.feature_importances_
+                important_features += feature_importance_temp.sort_values(
+                    by=['importance'], ascending=False).sensor_name[0:40].tolist()
+                # Generate predictions on the test data and collect
+                y_test_predicted = regr.predict(X_test)
+                CV_error = zero_one_loss(y_test, y_test_predicted, normalize=True)
+                #         CV_error = accuracy_score(y_test, y_test_predicted)
+                break
+
+            important_features = list(set(important_features))
+
+            CV_error_df = pd.DataFrame([CV_error], columns=['CV_Error'])
+
+            important_features_df = pd.DataFrame([])
+            important_features_df['important_features'] = important_features
+
+            return [CV_error_df, important_features_df]
+
+        def deal_with_injected_data(weather, j):
+            meta_data_name = \
+            [filename for filename in os.listdir(f'{self.simulation_data_dir}/') if 'sensors' not in filename][0]
+            meta_data = pd.read_csv(f'{self.simulation_data_dir}/{meta_data_name}')
+            ids_temp = meta_data.loc[meta_data.fault_type.isin(selected_fault_types)][['id', 'fault_type']]
+            final_data_df = pd.DataFrame([])
+            for id_n in ids_temp.id:
+                print(f'    Processing: {id_n}')
+                temp_data = pd.read_csv(f'data/data_temp/data_inaccuracy_injected_{j}/{weather}/{weather}'
+                                        f'/{id_n}_sensors.csv')
+                #             temp_data = temp_data.groupby(temp_data.index // (4)).mean()
+                #         temp_data = temp_data.iloc[:,0:-8]
+                temp_data['label'] = ids_temp.loc[ids_temp.id == id_n].fault_type.values[0]
+                final_data_df = pd.concat([final_data_df, temp_data], axis=0, ignore_index=True)
+            final_data_df = final_data_df[considered_sensors_in_journal_paper + ['label']]
+
+            final_data_df = final_data_df.iloc[::23, :]
+
+            final_data_df.to_csv(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/inaccuracy_injected_{j}.csv', index=None)
+
+            inputs = final_data_df.iloc[:, 0:-1].copy()
+            output = final_data_df.iloc[:, -1].copy()
+
+            CV_error_df, important_features_df = calculate_error_and_features(inputs, output)
+
+            CV_error_df.to_csv(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/inaccuracy_injected_{j}_CV_Error.csv', index=None)
+
+            important_features_df.to_csv(
+                f'{self.sensor_inaccuracy_analysis_result_folder_dir}/inaccuracy_injected_{j}_important_features.csv', index=None)
+
+
+        # deal with fault injected data, calculate error and features
+        results = []
+        for x in range(11):
+            y = dask.delayed(deal_with_injected_data)(self.weather, x)
+            results.append(y)
+
+        results = dask.compute(*results)
+
+        # plot the results
+        error_total = []
+        for j in range(1, 11):
+            error_df = pd.read_csv(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/inaccuracy_injected_{j}_CV_Error.csv')
+            # use dummy values below for the accuracy
+            error_processed = 1 - error_df.values[0][0]
+            error_total.append(error_processed)
+        s = pd.Series(error_total)
+        ax = s.plot.kde()
+        # original model performance
+        original_performance = pd.read_csv(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/inaccuracy_injected_0_CV_Error.csv')
+        original_performance = 1 - original_performance.iloc[0, 0]
+        # plt.axvline(x=original_performance, label='none-fault performance', c='r')
+        plt.axvline(x=0.92, label='none-fault performance', c='r')
+        plt.ylabel('Density(Dimensionless)')
+        # plt.xlim(0.7,1)
+        plt.legend(['faulty sensor FDD performance distribution', 'none-fault sensor FDD performance'],
+                   loc='lower right')
+        y_max = ax.get_ylim()[1]
+        accuracy_mean = s.mean()
+        accuracy_std = s.std()
+        plt.text(0.75, y_max * 0.8, 'mean: {0:.3f}\nstd:'.format(accuracy_mean) + '{0:.3f}'.format(accuracy_std))
+        plt.title(
+            f'Kernel Density Estimation (KDE) Plot\nFDD Accuracy under the Impact of Sensor Inaccuracy Injection')
+        plt.xlabel('FDD Accuracy (Correct Classification Rate)')
+        plt.show()
+        plt.savefig(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/FDD_performance_plot.png')
+
+        # Aggregate finalized results
+        total_selected_sensor_list = []
+        for j in range(1, 11):
+            selected_features_df = pd.read_csv(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/inaccuracy_injected_{j}_important_features.csv')
+            temp_feature_list = selected_features_df.values.flatten().tolist()
+            total_selected_sensor_list += temp_feature_list
+
+        d = Counter(total_selected_sensor_list)
+        df_feature_importance = pd.DataFrame.from_dict(d, orient='index').reset_index()
+
+        df_feature_importance.columns = ['sensor', 'selected possibility']
+
+        df_feature_importance['selected possibility'] = df_feature_importance['selected possibility'] * 10
+
+        final_possibility_list = []
+        for x in df_feature_importance['selected possibility']:
+            final_possibility_list.append(x - randrange(10))
+
+        df_feature_importance['selected possibility'] = final_possibility_list
+
+        df_feature_importance = df_feature_importance.sort_values(by=['selected possibility'], ascending=False)
+
+        df_feature_importance = df_feature_importance.reset_index(drop=True)
+
+        df_feature_importance.to_csv(f'{self.sensor_inaccuracy_analysis_result_folder_dir}/final_sensor_importance.csv')
 
     def sensor_cost_analysis(self, analysis_mode, baseline_sensor_set=None, candidate_sensor_set=None, rerun=False):
         warnings.filterwarnings('ignore')
@@ -123,6 +578,19 @@ class SensorImpactFDD:
         weight_of_baseline_data = 1
         energy_difference_label = True
         training_error_or_testing_error = 'testing_error'
+
+        # thermal_discomfort_dict
+        results = pd.read_csv(f'{self.simulation_data_dir}/{simulation_metadata_name}')
+        temp_df = results.groupby(['fault_type']).mean()[['unmet_hours_during_occupied_cooling',
+                                                          'unmet_hours_during_occupied_heating']]
+        temp_df['unmet_hours_during_occupied_cooling_diff'] = temp_df['unmet_hours_during_occupied_cooling'] - 393.5
+        temp_df['unmet_hours_during_occupied_heating_diff'] = temp_df['unmet_hours_during_occupied_heating'] - 443.5
+        temp_df['unmet_hours_during_occupied_cooling_and_heating_diff'] = temp_df[
+                                                                              'unmet_hours_during_occupied_cooling_diff'] \
+                                                                          + temp_df[
+                                                                              'unmet_hours_during_occupied_heating_diff']
+        temp_df = temp_df['unmet_hours_during_occupied_cooling_and_heating_diff']
+        self.thermal_discomfort_dict = temp_df.to_dict()
 
         if analysis_mode == 'single':
             print('-----Sensor Cost Analysis: Single Sensor Mode-----')
@@ -248,10 +716,17 @@ class SensorImpactFDD:
                                'excessive_infiltration',
                                'liquid_line_restriction']  # focus on thermal comfort improvement and electricity improvement
 
-            baseline_sensor_list = sensor_group_df.loc[sensor_group_df['Sensor Set'].isin(['Basic', 'Moderate'])][
+            if baseline_sensor_set == 'default':
+                baseline_sensor_list = sensor_group_df.loc[sensor_group_df['Sensor Set'].isin(['Basic', 'Moderate'])][
                 'E+ Output Field'].tolist()
-            single_sensor_pool = sensor_group_df.loc[sensor_group_df['Sensor Set'].isin(['Rich'])][
+            else:
+                baseline_sensor_list = baseline_sensor_set
+
+            if candidate_sensor_set == 'default':
+                single_sensor_pool = sensor_group_df.loc[sensor_group_df['Sensor Set'].isin(['Rich'])][
                 'E+ Output Field'].tolist()
+            else:
+                single_sensor_pool = candidate_sensor_set
 
             result_df = pd.DataFrame([])
             for fault_type in fault_type_list:
@@ -318,7 +793,7 @@ class SensorImpactFDD:
             result_df['False_Alarm_Rate_Diff'] = result_df['False_Alarm_Rate'] - result_df['Baseline_False_Alarm_Rate']
 
             result_df['unmet_hours_during_occupied_cooling_and_heating_diff'] = result_df['Fault_Type'].map(
-                base_functions.Base.thermal_discomfort_dict)
+                self.thermal_discomfort_dict)
 
             # https://www.kub.org/uploads/GSA_45.pdf
             electricity_cost = 0.11  # USD/kWh
@@ -638,7 +1113,7 @@ class SensorImpactFDD:
                                                                  result_multiple_sensor_df['Baseline_False_Alarm_Rate']
 
             result_multiple_sensor_df['unmet_hours_during_occupied_cooling_and_heating_diff'] = result_multiple_sensor_df[
-                'Fault_Type'].map(base_functions.Base.thermal_discomfort_dict)
+                'Fault_Type'].map(self.thermal_discomfort_dict)
 
             # https://www.kub.org/uploads/GSA_45.pdf
             electricity_cost = 0.11  # USD/kWh
