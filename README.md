@@ -134,6 +134,8 @@ Use config.json to define case-specific parameters instead of put all of constan
 Improve sensor cost analysis using sensor selection module results instead of a simple feature selection, 3/4/2022
 
 Find a server to store simulation data used for "general_guidance" mode, 5/2
+
+Refactor and optimize the code by removing hard coding based on exsiting simulation data, 6/10 
   
 Write documentation for preparing simulation data in the "User Defined Analysis" mode, 6/15
   
@@ -144,7 +146,7 @@ TODO: use fault prevalence probability to calculate STMC ranges
 
 TODO: add data cleaning function to remove sensor with wrong data type and remove data with bad quality
   
-TODO: parallel computing of large simulation data and large Monte Carlo runs
+TODO: improve the computation efficiency of all three modules by parallel computing of large simulation data and large Monte Carlo runs
 
 TODO: raise a warning based on ML validation error threshold
 
@@ -153,3 +155,5 @@ TODO: add a function to estimate the calculation time and raise a warning
 TODO: include the function of filter method and wrapper method in sensor selection module
 
 TODO: better KDE plot for sensor inaccuracy analysis
+  
+TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module
