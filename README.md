@@ -36,7 +36,7 @@ The data include 22 fault types data under seven weathers from different climate
 The users need to prepare the data themselves only when the “technical_route” is “user_defined_analysis”. If “technical_route” is “general_guidance”, the module will provide an automatic download of simulation data, so the users do not need to prepare simulation data. Please contact Liang.Zhang@nrel.gov if there is any download issues.
 
 ## Modules
-The base.py and sensor_impact_FDD.py provide modules to realize sensor impact evaluations. This repo contains three sub-classes that realize three modules used for sensor impact evaluation in FDD.
+The sensor_impact_FDD.py provide modules to realize sensor impact evaluations. This repo contains three sub-classes that realize three modules used for sensor impact evaluation in FDD.
 
 ### Module 1: Sensor Selection Analysis
 Sub-Class Name: sensor_selection_analysis
