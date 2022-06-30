@@ -116,6 +116,14 @@ The example result is shown as follows:
 
 [Gradient Boosting for classification](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn.ensemble.GradientBoostingClassifier)
 
+## Unit Test and Integration Test
+
+The codes for the automation of unit test and integration test are located here: `sensor-impact-evaluation-and-verification/test/`
+
+Unit test: test for all three analysis modules using "unittest" module in Python to (1) make sure output matches expectedv values, (2) consider parameter type error
+
+The integration test focuses on the connections between the model setup and each analysis module. We created seven test scenarios. Three scenarios test the whole workflow with only one analysis. The other three scenarios test the whole workflow with two analysis conducted. The final test scenario runs all the three analysis modules.
+
 ## Work in Progress
 ~~TODO: find a better structure to select ML algorithm, 2/22/2022~~
 
