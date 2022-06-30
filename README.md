@@ -48,7 +48,7 @@ Output: most important sensors rank by importance (optionally by fault type)
 ### Module 2: Sensor Inaccuracy Analysis
 Sub-Class Name: sensor_inaccuracy_analysis
 
-Inputs: `sensor_fault_probability_table` defines conditional probability of sensor fault as the key input for this analysis. `by_fault_type` defines whether the analysis is conducted by fault type or consider all faults in one model. `top_n_features` defines number of the most important features shown as results.`Monte_Carlo_runs` defines number of runs for Monte Carlo simulation. `rerun=False` defines whether rerun the analysis if running results are detected.
+Inputs: `Monte_Carlo_runs` defines number of runs for Monte Carlo simulation. `rerun=False` defines whether rerun the analysis if running results are detected.
 
 Output: most important sensors rank by importance with uncertainty (optionally by fault type) and FDD accuracy Kernel density estimation (KDE) plot which quantifies the uncertainty of FDD accuracy.
 
