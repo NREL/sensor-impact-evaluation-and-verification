@@ -105,7 +105,7 @@ The third analysis is sensor cost analysis. The key inputs to be defined in this
 The example result is shown as follows:  
 
 ![Module 3 Results Example](https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_3_results_example.png)
-<img src="https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_3_results_example.png" width="100" height="100">
+<img src="https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_3_results_example.png" width="2000" height="1000">
 
 ## Machine Learning Algorithms Options in this module
 
