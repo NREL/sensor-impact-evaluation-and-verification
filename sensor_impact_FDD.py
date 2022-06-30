@@ -1,29 +1,3 @@
-# Near Term
-# TODO: document to prepare config.json and sensor_fault_probability_table
-# TODO: Documentation should include ['E+ Output Field', 'Sensor Set'] for sensor type table, 'Basic', 'Moderate'
-
-
-# TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis
-
-# Long Term
-# TODO: filter method and wrapper method needs work, but I will do it in Q4
-# TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection
-
-# Done
-# TODO: function description of three modules
-# TODO: check all strings in '' and "", make sure they are  generic, if not, add into config files
-# TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py
-# TODO: improve the computation efficiency of all three modules
-# TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module
-# TODO: don't understand what is "final_data_df = final_data_df.iloc[::23, :]". They are deleted.
-# TODO: check whether "results = dask.compute(*results)" is necessary. Yes they are necessary
-# TODO: file requirement: {simulation_id}_sensors.csv, also the exact same meta data file. Added in the documentation
-# TODO: add "gdown" into the package installation list
-# TODO: 'baseline' for meta data non-fault name
-# TODO: 'electricity_facility [W]', 'gas_facility [W]', 'unmet_hours_during_occupied_cooling','unmet_hours_during_occupied_heating'
-# TODO: 'electricity_facility [W]', 'gas_facility [W]', 'unmet_hours_during_occupied_cooling','unmet_hours_during_occupied_heating'
-
-
 import pandas as pd
 import numpy as np
 import os
