@@ -63,11 +63,8 @@ Output: summary table ranking sensor opportunity values (Sensor Threshold Margin
 Create an object to define the general analysis configurations. In the example, the technical route is "general guidance", which indicates that the analysis is based on providing general guidance and analysis instead of analyzing specific building. In this mode, the users do not need to prepare data for the analysis for themselves.
 
 `$import senosr_impact_FDD as SIF
-
 import base_functions as bf
-
 import os
-
 example_object = SIF.SensorImpactFDD(technical_route='general_guidance',
                                      building_type_or_name='small_commercial_building',
                                      ml_algorithm='random_forest',
