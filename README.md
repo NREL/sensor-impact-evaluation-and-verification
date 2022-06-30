@@ -76,11 +76,10 @@ example_object = SIF.SensorImpactFDD(technical_route='general_guidance',
 
 After creating the object, three kinds of anaylsis can be done based on the object. The first analysis is sensor selection analysis which can be used to identify important sensors for FDD purpose. There are two major modes in this anaylsis (1) important sensor by fault type, which ranks sensors by each fault, (2) important sensors for all fault types.
 
-`$example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'sum', 'std', 'skew', 'kurt'], '4h'],
-                                         feature_selection_config=[['filter', 'pearson', 0.5], ['wrapper', 'forward'],
-                                                                   ['embedded', False]],
-                                         by_fault_type=False,
-                                         top_n_features=3,
+`$example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'std', 'skew', 'kurtosis'], 4*12],
+                                         feature_selection_config={'filter': [False, 0.0], 'wrapper': False, 'embedded': True},
+                                         by_fault_type=True,
+                                         top_n_features=10,
                                          rerun=False)`
 
 The example result is shown as follows:
@@ -89,11 +88,7 @@ The example result is shown as follows:
 
 The second analysis is sensor inaccruacy impact on sensor selection and FDD performance. The key input to this module is sensor fault probability table to define the probability of sensor with faults.
 
-`$example_object.sensor_inaccuracy_analysis(sensor_fault_probability_table=bf.Base.sensor_fault_probability_table,
-                                          by_fault_type=False,
-                                          top_n_features=20,
-                                          Monte_Carlo_runs=1000,
-                                          rerun=False)`
+`$example_object.sensor_inaccuracy_analysis(Monte_Carlo_runs=1000, rerun=True)`
 
 The example result is shown as follows:
 
@@ -102,8 +97,9 @@ The example result is shown as follows:
 The third analysis is sensor cost analysis. The key inputs to be defined in this module is baseline sensor set, candidate sensor set, and analysis mode which defines whether sensors are evaluate one by one or group by group.
 
 `$example_object.sensor_cost_analysis(analysis_mode='group',
-                                    baseline_sensor_set=bf.Base.baseline_sensor_set,
-                                    candidate_sensor_set=bf.Base.candidate_sensor_set,
+                                    baseline_sensor_set='default',
+                                    candidate_sensor_set='default',
+                                    objective_function_coefficients=[0.11, 150, 15643],
                                     rerun=True)`
 
 The example result is shown as follows:  
