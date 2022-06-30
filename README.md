@@ -93,7 +93,7 @@ The second analysis is sensor inaccruacy impact on sensor selection and FDD perf
 The example result is shown as follows:
 
 <!-- ![Module 2 Results Example](https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_2_results_example.png) -->
-<img src="https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_2_results_example.png" width="600" height="400">
+<img src="https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_2_results_example.png" width="600" height="600">
 
 The third analysis is sensor cost analysis. The key inputs to be defined in this module is baseline sensor set, candidate sensor set, and analysis mode which defines whether sensors are evaluate one by one or group by group.
 
