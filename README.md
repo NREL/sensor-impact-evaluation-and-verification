@@ -120,34 +120,36 @@ Unit test: test for all three analysis modules using "unittest" module in Python
 
 The integration test focuses on the connections between the model setup and each analysis module. We created seven test scenarios. Three scenarios test the whole workflow with only one analysis. The other three scenarios test the whole workflow with two analysis conducted. The final test scenario runs all the three analysis modules.
 
-## Work in Progress
-~~TODO: find a better structure to select ML algorithm, 2/22/2022~~
+## Tasks Fnished
+Find a better structure to select ML algorithm, 2/22/2022
 
-~~TODO: documentation to describe how to generate simulation data when technical_route is user_defined_analysis, 2/22/2022~~
+Documentation to describe how to generate simulation data when technical_route is user_defined_analysis, 2/22/2022
 
-~~TODO: reduce the size of temporary files generated in sensor_inaccuracy_analysis module, 2/25/2022~~
+Reduce the size of temporary files generated in sensor_inaccuracy_analysis module, 2/25/2022
 
-~~TODO: improve the computation efficiency of all three modules, 2/30/2022~~
+Improve the computation efficiency of all three modules, 2/30/2022
 
-~~TODO: use config.json to define case-specific parameters instead of put all of constants in base_functions.py, 2/30/2022~~
+Use config.json to define case-specific parameters instead of put all of constants in base_functions.py, 2/30/2022
 
-~~TODO: improve sensor cost analysis using sensor selection module results instead of a simple feature selection, 3/4/2022~~
+Improve sensor cost analysis using sensor selection module results instead of a simple feature selection, 3/4/2022
 
-TODO: Find a server to store simulation data used for "general_guidance" mode
+Find a server to store simulation data used for "general_guidance" mode, 5/2
+  
+Write documentation for preparing simulation data in the "User Defined Analysis" mode, 6/15
+  
+Write doocumentation to prepare config.json, sensor_fault_probability_table, and sensor group information, 6/21
 
+## Future Work
 TODO: use fault prevalence probability to calculate STMC ranges
 
-TODO: Write documentation for preparing simulation data in the "User Defined Analysis" mode
+TODO: add data cleaning function to remove sensor with wrong data type and remove data with bad quality
+  
+TODO: parallel computing of large simulation data and large Monte Carlo runs
 
-## Improvement and Test in Progress (FY22 Q3 AOP Tasks)
-Test: Missing data, NAN, wrong data type, super large data in the simulation file
+TODO: raise a warning based on ML validation error threshold
 
-Solution: add data cleaning function to remove sensor with wrong data type and remove data with bad quality
+TODO: add a function to estimate the calculation time and raise a warning
 
-Test: Monte Carlo Simulation number of runs is set too large
+TODO: include the function of filter method and wrapper method in sensor selection module
 
-Solution: add a function to estimate the calculation time and raise a warning
-
-Test: Certain Machine Learning algorithm is very inaccurate and the analysis results are very unreasonable
-
-Solution: raise a warning based on ML validation error threshold
+TODO: better KDE plot for sensor inaccuracy analysis
