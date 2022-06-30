@@ -36,6 +36,7 @@ setuptools.setup(
         'pickle',
         'dask',
         'matplotlib',
+        'gdown',
     ],
     extras_require={
         'dev': [
