@@ -1,0 +1,194 @@
+﻿E+ Output Field,Description,Sensor Set,Comment,,,
+OS_time,Timestamp,N/A,,Moderate+Basic,Basic,Moderate+Basic+Rich
+cooling_electricity [W],Submeter: cooling,Rich,"In practice, unlikely to be split out from fans",0,0,0
+electricity_facility [W],Main electricity meter,Basic,,1,1,1
+whole_building_facility_total_hvac_electric_demand_power [W],Cooling + heating + fans?,Moderate,Unclear what this includes; may be more realistic than cooling/heating/fans separate,2,2,2
+rooftop_supply_fan_fan_electric_energy [W],RTU supply fan,Rich,"Unlikely to be submetered, unless on a VFD",3,3,3
+fans_electricity [W],Submeter: ventilation,Rich,"In practice, unlikely to be split out from cooling",4,4,4
+gas_facility [W],Main gas meter,Rich,Gas interval data is not common,5,5,5
+rooftop_heatingcoil_heating_coil_heating_energy [W],RTU airside heating?,Rich,Very unlikely to be measured in practice,6,6,6
+room_102_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,7,7,7
+room_103_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,8,8,8
+room_104_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,9,9,9
+room_105_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,10,10,10
+room_106_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,11,11,11
+room_202_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,12,12,12
+room_203_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,13,13,13
+room_204_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,14,14,14
+room_205_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,15,15,15
+room_206_reheat_coil_heating_coil_heating_energy [W],VAV box reheat,Rich,Unlikely to be submetered in practice,16,16,16
+heating_electricity [W],Submeter: heating,Moderate,"In practice, it is plausible that VAV boxes might be independently submetered",17,17,17
+heating_gas [W],Heating gas meter,Rich,Gas interval data is not common,18,18,18
+interiorequipment_electricity [W],Submeter: plug loads,Moderate,,19,19,19
+interiorlights_electricity [W],Submeter: lighting,Moderate,,20,20,20
+environment_site_diffuse_solar_radiation_rate_per_area [W/m2],Diffuse horizontal irradiance,Rich,Unlikely to be measured; local global horizontal irradiance (GHI) measurement is more plausible,21,21,21
+environment_site_direct_solar_radiation_rate_per_area [W/m2],Direct normal irradiance,Rich,Unlikely to be measured; local global horizontal irradiance (GHI) measurement is more plausible,22,22,22
+environment_site_outdoor_air_barometric_pressure [Pa],Atmospheric pressure,Basic,Assumption: can be obtained from local weather station,23,23,23
+environment_site_outdoor_air_drybulb_temperature [C],Dry bulb temperature,Basic,Assumption: can be obtained from local weather station,24,24,24
+environment_site_outdoor_air_relative_humidity [%],Relative humidity,Basic,Assumption: can be obtained from local weather station,25,25,25
+environment_site_outdoor_air_wetbulb_temperature [C],Wet bulb temperature,Basic,Assumption: can be obtained from local weather station,26,26,26
+environment_site_rain_status [],Rain indicator? (yes/no?),Basic,Assumption: can be obtained from local weather station,27,27,27
+model_outdoor_air_node_system_node_current_density_volume_flow_rate [m3/s],?,,Unclear what this is,28,28,28
+node_1_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,29,29,29
+node_10_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,30,30,30
+node_11_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,31,31,31
+node_12_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,32,32,32
+node_13_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,33,33,33
+node_14_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,34,34,34
+node_15_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,35,35,35
+node_16_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,36,36,36
+node_17_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,37,37,37
+node_18_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,38,38,38
+node_19_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,39,39,39
+node_2_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,40,40,40
+node_20_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,41,41,41
+node_21_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,42,42,42
+node_22_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,43,43,43
+node_23_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,44,44,44
+node_24_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,45,45,45
+node_25_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,46,46,46
+node_26_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,47,47,47
+node_27_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,48,48,48
+node_28_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,49,49,49
+node_3_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,50,50,50
+node_4_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,51,51,51
+node_6_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,52,52,52
+node_7_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,53,53,53
+node_8_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,54,54,54
+node_9_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,55,55,55
+rooftop_cooling_coil_outlet_system_node_current_density_volume_flow_rate [m3/s],Flow within RTU,Unlikely,,56,56,56
+rooftop_heating_coil_outlet_system_node_current_density_volume_flow_rate [m3/s],Flow within RTU,Unlikely,,57,57,57
+rooftop_mixed_air_outlet_system_node_current_density_volume_flow_rate [m3/s],Flow within RTU,Unlikely,,58,58,58
+rooftop_supply_fan_outlet_system_node_current_density_volume_flow_rate [m3/s],Flow within RTU,Rich,This is the flow measurement most likely to be available,59,59,59
+room_102_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,60,60,60
+room_102_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",61,61,61
+room_103_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,62,62,62
+room_103_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",63,63,63
+room_104_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,64,64,64
+room_104_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",65,65,65
+room_105_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,66,66,66
+room_105_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",67,67,67
+room_106_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,68,68,68
+room_106_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",69,69,69
+room_202_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,70,70,70
+room_202_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",71,71,71
+room_203_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,72,72,72
+room_203_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",73,73,73
+room_204_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,74,74,74
+room_204_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",75,75,75
+room_205_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,76,76,76
+room_205_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",77,77,77
+room_206_supply_inlet_system_node_current_density_volume_flow_rate [m3/s],VAV box inlet (?) flow,Unlikely,Would not have both this and the exit flow,78,78,78
+room_206_vav_reheat_damper_outlet_system_node_current_density_volume_flow_rate [m3/s],VAV box outlet flow,Rich,"Could conceivably be computed or estimated, if not measured directly",79,79,79
+{0628a441-dd58-4747-b49f-b343da599f6d}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,80,80,80
+{37d30d88-4e83-4f6c-98c7-a29c55ba3e84}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,81,81,81
+{38113ce7-41ec-4cfc-9439-9e0eb1e4167e}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,82,82,82
+{3a71b498-dd57-4750-ab29-7013d94b7420}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,83,83,83
+{466be93f-f26d-4e42-ab5f-0c90ed714020}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,84,84,84
+{6ec5fd0e-2850-4c87-bc5f-bc1e2d2e5109}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,85,85,85
+{76064095-69fd-4710-a706-3caca6b1930a}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,86,86,86
+{8411efaa-a23b-4a5a-be30-f1fa819dbe95}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,87,87,87
+{9129fe30-5384-4db8-8e33-0bb342dd4a49}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,88,88,88
+{ced936e0-0614-4c8a-a4d6-aa0b5c362790}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,89,89,89
+{d5737138-bc5b-4212-acf2-fd3235458210}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,90,90,90
+{d9fe34a3-6952-4cd4-96fc-8fec69429e39}_system_node_current_density_volume_flow_rate [m3/s],Flow within air system?,Unlikely,,91,91,91
+model_outdoor_air_node_system_node_temperature [C],?,,Unclear what this is,92,92,92
+node_1_system_node_temperature [C],Temp within air system?,Unlikely,,93,93,93
+node_10_system_node_temperature [C],Temp within air system?,Unlikely,,94,94,94
+node_11_system_node_temperature [C],Temp within air system?,Unlikely,,95,95,95
+node_12_system_node_temperature [C],Temp within air system?,Unlikely,,96,96,96
+node_13_system_node_temperature [C],Temp within air system?,Unlikely,,97,97,97
+node_14_system_node_temperature [C],Temp within air system?,Unlikely,,98,98,98
+node_15_system_node_temperature [C],Temp within air system?,Unlikely,,99,99,99
+node_16_system_node_temperature [C],Temp within air system?,Unlikely,,100,100,100
+node_17_system_node_temperature [C],Temp within air system?,Unlikely,,101,101,101
+node_18_system_node_temperature [C],Temp within air system?,Unlikely,,102,102,102
+node_19_system_node_temperature [C],Temp within air system?,Unlikely,,103,103,103
+node_2_system_node_temperature [C],Temp within air system?,Unlikely,,104,104,104
+node_20_system_node_temperature [C],Temp within air system?,Unlikely,,105,105,105
+node_21_system_node_temperature [C],Temp within air system?,Unlikely,,106,106,106
+node_22_system_node_temperature [C],Temp within air system?,Unlikely,,107,107,107
+node_23_system_node_temperature [C],Temp within air system?,Unlikely,,108,108,108
+node_24_system_node_temperature [C],Temp within air system?,Unlikely,,109,109,109
+node_25_system_node_temperature [C],Temp within air system?,Unlikely,,110,110,110
+node_26_system_node_temperature [C],Temp within air system?,Unlikely,,111,111,111
+node_27_system_node_temperature [C],Temp within air system?,Unlikely,,112,112,112
+node_28_system_node_temperature [C],Temp within air system?,Unlikely,,113,113,113
+node_3_system_node_temperature [C],Temp within air system?,Unlikely,,114,114,114
+node_4_system_node_temperature [C],Temp within air system?,Unlikely,,115,115,115
+node_6_system_node_temperature [C],Temp within air system?,Unlikely,,116,116,116
+node_7_system_node_temperature [C],Temp within air system?,Unlikely,,117,117,117
+node_8_system_node_temperature [C],Temp within air system?,Unlikely,,118,118,118
+node_9_system_node_temperature [C],Temp within air system?,Unlikely,,119,119,119
+rooftop_cooling_coil_outlet_system_node_temperature [C],RTU cooling coil air exit temp?,Moderate,,120,120,120
+rooftop_heating_coil_outlet_system_node_temperature [C],RTU heating coil air exit temp?,Moderate,,121,121,121
+rooftop_mixed_air_outlet_system_node_temperature [C],RTU mixed air temp,Moderate,,122,122,122
+rooftop_supply_fan_outlet_system_node_temperature [C],RTU supply air temp,Moderate,,123,123,123
+room_102_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,124,124,124
+room_102_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,125,125,125
+room_103_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,126,126,126
+room_103_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,127,127,127
+room_104_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,128,128,128
+room_104_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,129,129,129
+room_105_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,130,130,130
+room_105_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,131,131,131
+room_106_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,132,132,132
+room_106_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,133,133,133
+room_202_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,134,134,134
+room_202_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,135,135,135
+room_203_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,136,136,136
+room_203_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,137,137,137
+room_204_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,138,138,138
+room_204_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,139,139,139
+room_205_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,140,140,140
+room_205_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,141,141,141
+room_206_supply_inlet_system_node_temperature [C],VAV box inlet (?) temp,Moderate,,142,142,142
+room_206_vav_reheat_damper_outlet_system_node_temperature [C],VAV box outlet temp,Moderate,,143,143,143
+{0628a441-dd58-4747-b49f-b343da599f6d}_system_node_temperature [C],Temp within air system?,Unlikely,,144,144,144
+{37d30d88-4e83-4f6c-98c7-a29c55ba3e84}_system_node_temperature [C],Temp within air system?,Unlikely,,145,145,145
+{38113ce7-41ec-4cfc-9439-9e0eb1e4167e}_system_node_temperature [C],Temp within air system?,Unlikely,,146,146,146
+{3a71b498-dd57-4750-ab29-7013d94b7420}_system_node_temperature [C],Temp within air system?,Unlikely,,147,147,147
+{466be93f-f26d-4e42-ab5f-0c90ed714020}_system_node_temperature [C],Temp within air system?,Unlikely,,148,148,148
+{6ec5fd0e-2850-4c87-bc5f-bc1e2d2e5109}_system_node_temperature [C],Temp within air system?,Unlikely,,149,149,149
+{76064095-69fd-4710-a706-3caca6b1930a}_system_node_temperature [C],Temp within air system?,Unlikely,,150,150,150
+{8411efaa-a23b-4a5a-be30-f1fa819dbe95}_system_node_temperature [C],Temp within air system?,Unlikely,,151,151,151
+{9129fe30-5384-4db8-8e33-0bb342dd4a49}_system_node_temperature [C],Temp within air system?,Unlikely,,152,152,152
+{ced936e0-0614-4c8a-a4d6-aa0b5c362790}_system_node_temperature [C],Temp within air system?,Unlikely,,153,153,153
+{d5737138-bc5b-4212-acf2-fd3235458210}_system_node_temperature [C],Temp within air system?,Unlikely,,154,154,154
+{d9fe34a3-6952-4cd4-96fc-8fec69429e39}_system_node_temperature [C],Temp within air system?,Unlikely,,155,155,155
+1f_plenum_zone_air_relative_humidity [%],Plenum air humidity,Rich,,156,156,156
+2f_plenum_zone_air_relative_humidity [%],Plenum air humidity,Rich,,157,157,157
+room_101_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",158,158,158
+room_102_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",159,159,159
+room_103_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",160,160,160
+room_104_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",161,161,161
+room_105_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",162,162,162
+room_106_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",163,163,163
+room_201_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",164,164,164
+room_202_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",165,165,165
+room_203_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",166,166,166
+room_204_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",167,167,167
+room_205_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",168,168,168
+room_206_zone_air_relative_humidity [%],Zone air humidity,Rich,"RH not usually measured at zone level, but can be",169,169,169
+1f_plenum_zone_mean_air_temperature [C],Plenum air temp,Rich,,170,170,170
+2f_plenum_zone_mean_air_temperature [C],Plenum air temp,Rich,,171,171,171
+room_101_zone_mean_air_temperature [C],Zone air temperature,Moderate,,172,172,172
+room_102_zone_mean_air_temperature [C],Zone air temperature,Moderate,,173,173,173
+room_103_zone_mean_air_temperature [C],Zone air temperature,Moderate,,174,174,174
+room_104_zone_mean_air_temperature [C],Zone air temperature,Moderate,,175,175,175
+room_105_zone_mean_air_temperature [C],Zone air temperature,Moderate,,176,176,176
+room_106_zone_mean_air_temperature [C],Zone air temperature,Moderate,,177,177,177
+room_201_zone_mean_air_temperature [C],Zone air temperature,Moderate,,178,178,178
+room_202_zone_mean_air_temperature [C],Zone air temperature,Moderate,,179,179,179
+room_203_zone_mean_air_temperature [C],Zone air temperature,Moderate,,180,180,180
+room_204_zone_mean_air_temperature [C],Zone air temperature,Moderate,,181,181,181
+room_205_zone_mean_air_temperature [C],Zone air temperature,Moderate,,182,182,182
+room_206_zone_mean_air_temperature [C],Zone air temperature,Moderate,,183,183,183
+electricity_facility [W],,,Redundant,184,184,184
+gas_facility [W],,,Redundant,185,185,185
+interiorlights_electricity [W],,,Redundant,186,186,186
+interiorequipment_electricity [W],,,Redundant,187,187,187
+fans_electricity [W],,,Redundant,188,188,188
+heating_electricity [W],,,Redundant,189,189,189
+heating_gas [W],,,Redundant,190,190,190
+cooling_electricity [W],,,Redundant,191,191,191
