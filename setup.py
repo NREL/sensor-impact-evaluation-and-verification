@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+ 
 import setuptools
 from codecs import open
 import os
