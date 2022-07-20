@@ -62,14 +62,14 @@ Output: summary table ranking sensor opportunity values (Sensor Threshold Margin
 ## Use Cases
 Create an object to define the general analysis configurations. In the example, the technical route is "general guidance", which indicates that the analysis is based on providing general guidance and analysis instead of analyzing specific building. In this mode, the users do not need to prepare data for the analysis for themselves.
 
-`$import senosr_impact_FDD as SIF
-import base_functions as bf
-import os
-example_object = SIF.SensorImpactFDD(technical_route='general_guidance',
-                                     building_type_or_name='small_commercial_building',
-                                     ml_algorithm='random_forest',
-                                     weather='TN_Knoxville',
-                                     root_path=os.getcwd())`
+`import senosr_impact_FDD as SIF`\
+`import base_functions as bf`\
+`import os`\
+`example_object = SIF.SensorImpactFDD(technical_route='general_guidance',`\
+`                                     building_type_or_name='small_commercial_building',`\
+`                                     ml_algorithm='random_forest',`\
+`                                     weather='TN_Knoxville',`\
+`                                     root_path=os.getcwd())`
 
 After creating the object, three kinds of analysis can be done based on the object. The first analysis is sensor selection analysis which can be used to identify important sensors for FDD purpose. There are two major modes in this analysis (1) important sensor by fault type, which ranks sensors by each fault, (2) important sensors for all fault types.
 
