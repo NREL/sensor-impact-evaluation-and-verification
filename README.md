@@ -71,7 +71,7 @@ Create an object to define the general analysis configurations. In the example, 
 `                                     ml_algorithm='random_forest',`\
 `                                     weather='TN_Knoxville',`\
 `                                     root_path=os.getcwd())`
-<\pre>
+</pre>
 
 After creating the object, three kinds of analysis can be done based on the object. The first analysis is sensor selection analysis which can be used to identify important sensors for FDD purpose. There are two major modes in this analysis (1) important sensor by fault type, which ranks sensors by each fault, (2) important sensors for all fault types.
 
