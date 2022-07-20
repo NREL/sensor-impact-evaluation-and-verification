@@ -1,6 +1,3 @@
-[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
-[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
-
 # Python Package: Sensor Impact FDD (SIF)
 This is an NREL public repository used for sensor impact evaluation and verification project funded by DOE. Specifically, the function of repository can evaluate the sensor impact, including sensor inaccuracy, sensor selection, and sensor cost analysis on fault detection and diagnostics (FDD) performance.
 
@@ -76,7 +73,7 @@ example_object = SIF.SensorImpactFDD(technical_route='general_guidance',
 After creating the object, three kinds of analysis can be done based on the object. The first analysis is sensor selection analysis which can be used to identify important sensors for FDD purpose. There are two major modes in this analysis (1) important sensor by fault type, which ranks sensors by each fault, (2) important sensors for all fault types.
 
 <pre>
-example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'std', 'skew', 'kurtosis'], 4*12],
+example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'std'], 4*12],
                                          feature_selection_config={'filter': [False, 0.0], 'wrapper': False, 'embedded': True},
                                          by_fault_type=True,
                                          top_n_features=10,
@@ -90,7 +87,7 @@ The example result is shown as follows:
 
 The second analysis is sensor inaccuracy impact on sensor selection and FDD performance. The key input to this module is sensor fault probability table to define the probability of sensor with faults.
 
-`$example_object.sensor_inaccuracy_analysis(Monte_Carlo_runs=1000, rerun=True)`
+`example_object.sensor_inaccuracy_analysis(Monte_Carlo_runs=10, rerun=True)`
 
 The example result is shown as follows:
 
