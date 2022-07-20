@@ -66,7 +66,7 @@ Create an object to define the general analysis configurations. In the example, 
 `import base_functions as bf`\
 `import os`\
 `example_object = SIF.SensorImpactFDD(technical_route='general_guidance',`\
-`emspemspemspemspemspemspbuilding_type_or_name='small_commercial_building',`\
+`                                     building_type_or_name='small_commercial_building',`\
 `                                     ml_algorithm='random_forest',`\
 `                                     weather='TN_Knoxville',`\
 `                                     root_path=os.getcwd())`
