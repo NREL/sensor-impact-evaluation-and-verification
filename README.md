@@ -62,24 +62,26 @@ Output: summary table ranking sensor opportunity values (Sensor Threshold Margin
 ## Use Cases
 Create an object to define the general analysis configurations. In the example, the technical route is "general guidance", which indicates that the analysis is based on providing general guidance and analysis instead of analyzing specific building. In this mode, the users do not need to prepare data for the analysis for themselves.
 
- <pre>
-`import senosr_impact_FDD as SIF
+<pre>
+import senosr_impact_FDD as SIF
 import base_functions as bf
 import os
 example_object = SIF.SensorImpactFDD(technical_route='general_guidance',
                                      building_type_or_name='small_commercial_building',
                                      ml_algorithm='random_forest',
                                      weather='TN_Knoxville',
-                                     root_path=os.getcwd())`
+                                     root_path=os.getcwd())
 </pre>
 
 After creating the object, three kinds of analysis can be done based on the object. The first analysis is sensor selection analysis which can be used to identify important sensors for FDD purpose. There are two major modes in this analysis (1) important sensor by fault type, which ranks sensors by each fault, (2) important sensors for all fault types.
 
-`$example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'std', 'skew', 'kurtosis'], 4*12],
+<pre>
+example_object.sensor_selection_analysis(feature_extraction_config=[['mean', 'std', 'skew', 'kurtosis'], 4*12],
                                          feature_selection_config={'filter': [False, 0.0], 'wrapper': False, 'embedded': True},
                                          by_fault_type=True,
                                          top_n_features=10,
-                                         rerun=False)`
+                                         rerun=False)
+</pre>
 
 The example result is shown as follows:
 
@@ -97,11 +99,14 @@ The example result is shown as follows:
 
 The third analysis is sensor cost analysis. The key inputs to be defined in this module is baseline sensor set, candidate sensor set, and analysis mode which defines whether sensors are evaluate one by one or group by group.
 
-`$example_object.sensor_cost_analysis(analysis_mode='group',
+
+<pre>
+example_object.sensor_cost_analysis(analysis_mode='group',
                                     baseline_sensor_set='default',
                                     candidate_sensor_set='default',
                                     objective_function_coefficients=[0.11, 150, 15643],
-                                    rerun=True)`
+                                    rerun=True)
+</pre>
 
 The example result is shown as follows:  
 
