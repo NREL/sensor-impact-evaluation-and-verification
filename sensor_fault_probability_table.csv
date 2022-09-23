@@ -1,5 +1,5 @@
 ﻿sensor_type,general_fault_probability,failure,bias,drift,precision
-electiricty_meter,0.33,0.25,0.25,0.25,0.25
+electricity_meter,0.33,0.25,0.25,0.25,0.25
 system_node_temperature_sensor,0.33,0.25,0.25,0.25,0.25
 room_temperature_sensor,0.33,0.25,0.25,0.25,0.25
 energy_meter,0.33,0.25,0.25,0.25,0.25
