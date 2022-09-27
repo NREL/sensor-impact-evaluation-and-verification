@@ -1,4 +1,4 @@
-﻿E+ Output Field,Description,Sensor Set,Comment,,,
+﻿Sensor Name,Description,Sensor Set,Comment,,,
 OS_time,Timestamp,N/A,,Moderate+Basic,Basic,Moderate+Basic+Rich
 cooling_electricity [W],Submeter: cooling,Rich,"In practice, unlikely to be split out from fans",0,0,0
 electricity_facility [W],Main electricity meter,Basic,,1,1,1

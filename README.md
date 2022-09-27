@@ -24,7 +24,7 @@ Install the environment needed for this repository:
 ## Technical Routes: General Guidance and User Defined Analysis
 "General Guidance" mode is fully supported by an example dataset, created using an empirically-calibrated building energy model and corresponding fault model library representing Oak Ridge National Laboratory's Flexible Research Platform (FRP) facility. Check the Data section for download information. Users can run in "General Guidance" mode without providing any additional input data. This mode is useful to demonstrate the functionality of the analysis framework.
 
-"User Defined Analysis" mode allows users to apply the analysis framework to a set of user-defined input data. Guidance for generating the necessary simulation data can be found in `documents/User_Defined_Analysis_Simulation_Data_Generation_Guidance.docx`.
+"User Defined Analysis" mode allows users to apply the analysis framework to a set of user-defined input data. Guidance for generating the necessary simulation data can be found in `documentations/User_Defined_Analysis_Simulation_Data_Generation_Guidance.docx`.
 
 ## Data
 "General Guidance" mode leverages simulated building fault data from the Flexible Research Platform analysis case study based on the application of a fault library of 22 fault types across weather data from seven different climate zones.
@@ -38,12 +38,16 @@ sensor_impact_FDD.py leverages individual modules to evaluate sensor impact. Thi
 ### Module 1: Sensor Selection Analysis
 Sub-Class Name: sensor_selection_analysis
 
+Reference: Find details for this module in [this paper] (https://www.sciencedirect.com/science/article/pii/S0360132320307071).
+
 Inputs: `feature_extraction_config` defines feature extraction options. `feature_selection_config` defines feature selection options such as filter, wrapper, and hybrid method. `by_fault_type` defines whether the analysis is conducted for each fault fault type separately or considering all fault types as a group. `top_n_features` defines the number of features (ordered from most to least important) to be included in results `rerun=False` defines whether to rerun the analysis if previous results are detected.
 
 Output: a list of the most important sensors (those with the highest impact on FDD performance), ordered by importance (by individual fault type or across all fault types)
 
 ### Module 2: Sensor Inaccuracy Analysis
 Sub-Class Name: sensor_inaccuracy_analysis
+
+Reference: Find details for this module in [this paper] (https://link.springer.com/article/10.1007/s12273-021-0833-4).
 
 Inputs: `Monte_Carlo_runs` defines the number of runs for Monte Carlo simulation. `rerun=False` defines whether to rerun the analysis if previous results are detected.
 
@@ -52,7 +56,9 @@ Output: a ranking of sensor selection likelihood (from highest to lowest) given 
 ### Module 3: Sensor Cost Analysis
 Sub-Class Name: sensor_cost_analysis
 
-Inputs: `analysis_mode` defines whether the analysis is sensor-specific or based on a group of sensors ('group'). `baseline_sensor_set` defines the set of sensors that defines the starting point for analysis and comparison; this could be an existing sensor set for an operational building or a proposed design set for a new project. `candidate_sensor_set` defines the proposed sensor set to be evaluated against the baseline set. `rerun` defines whether to rerun the analysis if previous results are detected.
+Reference: A paper detailing this module has been accepted by *Energy*; a pre-publication manuscript can be found in 'documentations/Sensor Cost-Effectiveness Analysis for Data-Driven Fault Detection and Diagnostics in Commercial Buildings - Pre-Publication.doc' 
+
+Inputs: `analysis_mode` defines whether the analysis is sensor-specific ('single') or based on a group of sensors ('group'). `baseline_sensor_set` defines the set of sensors that defines the starting point for analysis and comparison; this could be an existing sensor set for an operational building or a proposed design set for a new project. `candidate_sensor_set` defines the proposed sensor set to be evaluated against the baseline set. `objective_function_coefficients` defines (in order) the electricity price ($/kWh), dollar value of thermal comfort, and dollar value of a maintenance visit. `rerun` defines whether to rerun the analysis if previous results are detected.
 
 Output: summary table ranking sensor opportunity values (Sensor Threshold Marginal Cost, or STMC) from highest to lowest, with disaggregated STMC component values for energy efficiency, thermal comfort, and maintenance.
 
@@ -94,11 +100,11 @@ The example sernsor inaccuracy analysis result is as follows:
 <!-- ![Module 2 Results Example](https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_2_results_example.png) -->
 <img src="https://github.com/NREL/sensor-impact-evaluation-and-verification/blob/main/figures/module_2_results_example.png" width="600" height="600">
 
-The third analysis type is sensor cost analysis. The key inputs to be defined for this module are the baseline sensor set, candidate sensor set, and analysis mode (which defines whether sensors are evaluated individually or as a combined set).
+The third analysis type is sensor cost analysis. The key inputs to be defined for this module are the baseline sensor set, candidate sensor set, and analysis mode (which defines whether sensors are evaluated individually or as a combined set). Results are based on a 3-year analysis period.
 
 
 <pre>
-example_object.sensor_cost_analysis(analysis_mode='group',
+example_object.sensor_cost_analysis(analysis_mode='single',
                                     baseline_sensor_set='default',
                                     candidate_sensor_set='default',
                                     objective_function_coefficients=[0.11, 150, 15643],
