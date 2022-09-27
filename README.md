@@ -38,7 +38,7 @@ sensor_impact_FDD.py leverages individual modules to evaluate sensor impact. Thi
 ### Module 1: Sensor Selection Analysis
 Sub-Class Name: sensor_selection_analysis
 
-Reference: Find details for this module in [this paper] (https://www.sciencedirect.com/science/article/pii/S0360132320307071).
+Reference: Find details for this module in [this paper](https://www.sciencedirect.com/science/article/pii/S0360132320307071).
 
 Inputs: `feature_extraction_config` defines feature extraction options. `feature_selection_config` defines feature selection options such as filter, wrapper, and hybrid method. `by_fault_type` defines whether the analysis is conducted for each fault fault type separately or considering all fault types as a group. `top_n_features` defines the number of features (ordered from most to least important) to be included in results `rerun=False` defines whether to rerun the analysis if previous results are detected.
 
@@ -47,7 +47,7 @@ Output: a list of the most important sensors (those with the highest impact on F
 ### Module 2: Sensor Inaccuracy Analysis
 Sub-Class Name: sensor_inaccuracy_analysis
 
-Reference: Find details for this module in [this paper] (https://link.springer.com/article/10.1007/s12273-021-0833-4).
+Reference: Find details for this module in [this paper](https://link.springer.com/article/10.1007/s12273-021-0833-4).
 
 Inputs: `Monte_Carlo_runs` defines the number of runs for Monte Carlo simulation. `rerun=False` defines whether to rerun the analysis if previous results are detected.
 
